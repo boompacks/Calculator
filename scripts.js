@@ -29,7 +29,73 @@ function divide(a, b){
     return "You can only insert numbers"
 }
 
-console.log(add(4, "4"));
-console.log(subtract(4, "4"));
-console.log(multiply(4, "4"));
-console.log(divide(4, "4"));
+
+function clearDisplay(){
+    display.textContent = "0";
+    pressedButtons = [];
+}
+
+
+function showOnDisplay(e){
+    if (display.textContent == "0") display.textContent = "";
+    display.textContent += this.textContent;
+    pressedButtons.push(this.textContent);
+}
+
+
+function addOperator(e){
+    if (display.textContent != "0") display.textContent = "0";
+    pressedButtons.push(this.textContent);
+}
+
+
+function getResult(){
+    while (pressedButtons.length){
+        let partialResult = operate()
+    }
+    display.textContent = result;
+}
+
+
+function operate(){
+    let firstOperand = pressedButtons.shift(),
+        operator = pressedButtons.shift(),
+        secondOperand = pressedButtons.shift();
+        
+
+    switch(operator){
+        case "+":
+            result += add(firstOperand, secondOperand);
+            break;
+        case "-":
+            result -= subtract(firstOperand, secondOperand);
+            break;
+        case "/":
+            result /= multiply(firstOperand, secondOperand);
+            break;
+        case "*":
+            result *= divide(firstOperand, secondOperand);
+            break;
+    }
+    return result
+}
+
+
+const display = document.querySelector('.screen');
+const clear = document.querySelector('.clear')
+const buttons = document.querySelectorAll('.button');
+const operators = document.querySelectorAll('.operator');
+const equal = document.querySelector('.equal')
+let pressedButtons = [];
+let result = 0;
+
+
+buttons.forEach(button => button.addEventListener('click', showOnDisplay))
+clear.addEventListener('click', clearDisplay)
+operators.forEach(operator => operator.addEventListener('click', addOperator))
+equal.addEventListener('click', getResult)
+
+
+// Come tenermi il risultato parziale:
+// Devo conservare il risultato ogni volta che mi serve, e passarlo alle funzioni 
+// al posto di first Operand

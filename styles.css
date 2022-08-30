@@ -1,0 +1,102 @@
+html{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+body{
+    background-color: rgb(37, 37, 37); 
+    color: white;
+    font-family: 'Roboto', 'sans-serif';
+    font-size: 18px;
+}
+
+
+div{
+    border:1px solid white;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.calculator{
+    height:500px;
+    width: 400px;
+    display:flex;
+    flex-flow: row wrap;
+}
+
+.calculatorHead{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+}
+
+
+.calculatorBody{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+
+.container{
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 8px;
+}
+
+
+.button, .clear, .operator, .equal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:24px;
+    width: 24px;
+    margin: 8px;
+}
+
+
+.operator{
+    background-color: rgb(0, 119, 255);
+}
+
+
+.equal{
+    background-color: orange;
+}
+
+
+.clear{
+    background-color: red;
+}
+
+
+.button:hover{
+    background-color: rgb(66, 66, 66);
+}
+
+
+.operator:hover{
+    background-color: rgb(3, 88, 185);
+}
+
+
+.equal:hover{
+    background-color: rgb(184, 120, 3);
+}
+
+
+.clear:hover{
+    background-color: rgb(179, 0, 0);
+}
+
+.screen{
+    width: 80%;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
