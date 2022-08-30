@@ -8,7 +8,8 @@ function add(a, b){
 
 function subtract(a, b){
     if (!isNaN(parseInt(a)) &&  !isNaN(parseInt(b))){
-        return parseInt(a) - parseInt(b)
+        let prova =parseInt(a) - parseInt(b)
+        return prova
     }
     return "You can only insert numbers"
 }
@@ -95,7 +96,5 @@ clear.addEventListener('click', clearDisplay)
 operators.forEach(operator => operator.addEventListener('click', addOperator))
 equal.addEventListener('click', getResult)
 
-
-// Come tenermi il risultato parziale:
-// Devo conservare il risultato ogni volta che mi serve, e passarlo alle funzioni 
-// al posto di first Operand
+// Il problema attualmente è che non mi torna i risultati parziali
+// in più alcune operazioni non funzionano correttamente perché il result parte da zero, e quindi sottraendo il risultato a quello si ottiene un errore
