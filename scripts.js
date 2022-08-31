@@ -2,99 +2,109 @@ function add(a, b){
     if (!isNaN(parseInt(a)) &&  !isNaN(parseInt(b))){
         return parseInt(a) + parseInt(b)
     }
-    return "You can only insert numbers"
+    return "ERROR"
 }
 
 
 function subtract(a, b){
     if (!isNaN(parseInt(a)) &&  !isNaN(parseInt(b))){
-        let prova =parseInt(a) - parseInt(b)
-        return prova
+        return parseInt(a) - parseInt(b)
     }
-    return "You can only insert numbers"
+    return "ERROR"
 }
 
 
 function multiply(a, b){
     if (!isNaN(parseInt(a)) &&  !isNaN(parseInt(b))){
-        return parseInt(a) *parseInt(b)
+        return parseInt(a) * parseInt(b)
     }
-    return "You can only insert numbers"
+    return "ERROR"
 }
 
 
 function divide(a, b){
-    if (!isNaN(parseInt(a)) &&  !isNaN(parseInt(b))){
+    if (b != 0 && (!isNaN(parseInt(a)) &&  !isNaN(parseInt(b)))){
         return parseInt(a) / parseInt(b)
     }
-    return "You can only insert numbers"
+    return "ERROR"
+}
+
+
+function deleteLastNumber(){
+    display.textContent = display.textContent.slice(0, -1);
+    if (display.textContent == "") display.textContent = "0";
+}
+
+
+function clearBuffers(){
+    operand = [];
+    operator = [];
 }
 
 
 function clearDisplay(){
     display.textContent = "0";
-    pressedButtons = [];
+    clearBuffers();
 }
 
 
 function showOnDisplay(e){
     if (display.textContent == "0") display.textContent = "";
     display.textContent += this.textContent;
-    pressedButtons.push(this.textContent);
 }
 
 
 function addOperator(e){
-    if (display.textContent != "0") display.textContent = "0";
-    pressedButtons.push(this.textContent);
+    operand.push(display.textContent);
+    operator.push(this.textContent);
+    display.textContent = "0";
 }
 
 
 function getResult(){
-    while (pressedButtons.length){
-        let partialResult = operate()
+    operand.push(display.textContent);
+    while (operator.length && operand.length) {
+        let result = operate(operator.shift(), operand.shift(), operand.shift());
+        operand.unshift(result);
     }
-    display.textContent = result;
+    display.textContent = operand[0];
+    clearBuffers();
 }
 
 
-function operate(){
-    let firstOperand = pressedButtons.shift(),
-        operator = pressedButtons.shift(),
-        secondOperand = pressedButtons.shift();
-        
-
-    switch(operator){
+function operate(operation, partialResult, secondOperand){
+    switch(operation){
         case "+":
-            result += add(firstOperand, secondOperand);
+            partialResult = add(partialResult, secondOperand);
             break;
         case "-":
-            result -= subtract(firstOperand, secondOperand);
+            partialResult = subtract(partialResult, secondOperand);
             break;
-        case "/":
-            result /= multiply(firstOperand, secondOperand);
+        case "×":
+            partialResult = multiply(partialResult, secondOperand);
             break;
-        case "*":
-            result *= divide(firstOperand, secondOperand);
+        case "÷":
+            partialResult = divide(partialResult, secondOperand);
             break;
     }
-    return result
+    return partialResult
 }
+
 
 
 const display = document.querySelector('.screen');
 const clear = document.querySelector('.clear')
 const buttons = document.querySelectorAll('.button');
 const operators = document.querySelectorAll('.operator');
-const equal = document.querySelector('.equal')
-let pressedButtons = [];
-let result = 0;
+const equal = document.querySelector('.equal');
+const undo = document.querySelector('.undo');
+let operand = [];
+let operator = [];
 
 
-buttons.forEach(button => button.addEventListener('click', showOnDisplay))
-clear.addEventListener('click', clearDisplay)
-operators.forEach(operator => operator.addEventListener('click', addOperator))
-equal.addEventListener('click', getResult)
+buttons.forEach(button => button.addEventListener('click', showOnDisplay));
+clear.addEventListener('click', clearDisplay);
+operators.forEach(operator => operator.addEventListener('click', addOperator));
+equal.addEventListener('click', getResult);
+undo.addEventListener('click', deleteLastNumber);
 
-// Il problema attualmente è che non mi torna i risultati parziali
-// in più alcune operazioni non funzionano correttamente perché il result parte da zero, e quindi sottraendo il risultato a quello si ottiene un errore
