@@ -1,3 +1,14 @@
+const display = document.querySelector('.screen');
+const clear = document.querySelector('.clear')
+const buttons = document.querySelectorAll('.button');
+const operators = document.querySelectorAll('.operator');
+const equal = document.querySelector('.equal');
+const undo = document.querySelector('.undo');
+const allButtons = document.querySelectorAll('.container > *')
+let operand = [];
+let operator = [];
+let value = 0;
+
 function add(a, b){
     if (!isNaN(parseInt(a)) &&  !isNaN(parseInt(b))){
         return parseInt(a) + parseInt(b)
@@ -111,16 +122,7 @@ function operate(operation, partialResult, secondOperand){
 
 
 
-const display = document.querySelector('.screen');
-const clear = document.querySelector('.clear')
-const buttons = document.querySelectorAll('.button');
-const operators = document.querySelectorAll('.operator');
-const equal = document.querySelector('.equal');
-const undo = document.querySelector('.undo');
-const allButtons = document.querySelectorAll('.container > *')
-let operand = [];
-let operator = [];
-let value = 0;
+
 
 
 buttons.forEach(button => button.addEventListener('click', showOnDisplay));
@@ -136,6 +138,10 @@ document.addEventListener('keydown', (key) =>{
         if (key.key == button.getAttribute('value')){
             if (key.key == "Enter"){
                 getResult();
+            } else if (key.key == "Backspace"){
+                deleteLastNumber();
+            } else if (key.key == "c"){
+                clearDisplay();
             } else if (isNaN(parseInt(key.key))){
                 addOperatorKeyboard(key.key)
             }
@@ -145,7 +151,3 @@ document.addEventListener('keydown', (key) =>{
         }
     })
 });
-
-// Devo prendere gli attributi dei div
-// Fare in modo di far corrispondere all'attributo il bottone
-// Posso provare a prendere il e.key che ho premuto, e confrontarlo con i valori, in tal caso posso provare a simulargli il click
