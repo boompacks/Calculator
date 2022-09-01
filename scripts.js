@@ -54,9 +54,22 @@ function showOnDisplay(e){
 }
 
 
+function showOnDisplayKeyboard(value){
+    if (display.textContent == "0") display.textContent = "";
+    display.textContent += value;
+}
+
+
 function addOperator(e){
     operand.push(display.textContent);
     operator.push(this.textContent);
+    display.textContent = "0";
+}
+
+
+function addOperatorKeyboard(value){
+    operand.push(display.textContent);
+    operator.push(value);
     display.textContent = "0";
 }
 
@@ -83,7 +96,13 @@ function operate(operation, partialResult, secondOperand){
         case "×":
             partialResult = multiply(partialResult, secondOperand);
             break;
+        case "*":
+            partialResult = multiply(partialResult, secondOperand);
+            break;
         case "÷":
+            partialResult = divide(partialResult, secondOperand);
+            break;
+        case "/":
             partialResult = divide(partialResult, secondOperand);
             break;
     }
@@ -98,8 +117,10 @@ const buttons = document.querySelectorAll('.button');
 const operators = document.querySelectorAll('.operator');
 const equal = document.querySelector('.equal');
 const undo = document.querySelector('.undo');
+const allButtons = document.querySelectorAll('.container > *')
 let operand = [];
 let operator = [];
+let value = 0;
 
 
 buttons.forEach(button => button.addEventListener('click', showOnDisplay));
@@ -108,3 +129,23 @@ operators.forEach(operator => operator.addEventListener('click', addOperator));
 equal.addEventListener('click', getResult);
 undo.addEventListener('click', deleteLastNumber);
 
+
+document.addEventListener('keydown', (key) =>{
+    allButtons.forEach(button => {
+        value = button.getAttribute('value');
+        if (key.key == button.getAttribute('value')){
+            if (key.key == "Enter"){
+                getResult();
+            } else if (isNaN(parseInt(key.key))){
+                addOperatorKeyboard(key.key)
+            }
+            else {
+                showOnDisplayKeyboard(key.key);
+            }
+        }
+    })
+});
+
+// Devo prendere gli attributi dei div
+// Fare in modo di far corrispondere all'attributo il bottone
+// Posso provare a prendere il e.key che ho premuto, e confrontarlo con i valori, in tal caso posso provare a simulargli il click
