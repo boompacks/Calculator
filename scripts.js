@@ -120,11 +120,6 @@ function operate(operation, partialResult, secondOperand){
     return partialResult
 }
 
-
-
-
-
-
 buttons.forEach(button => button.addEventListener('click', showOnDisplay));
 clear.addEventListener('click', clearDisplay);
 operators.forEach(operator => operator.addEventListener('click', addOperator));
