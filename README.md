@@ -1,2 +1,2 @@
 # Calculator
-Calculator project from The Odin Project course
+Implementation of a simple calculator in JavaScript 
